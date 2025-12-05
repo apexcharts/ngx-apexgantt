@@ -46,7 +46,7 @@ import { provideApexGanttLicense } from "ngx-apexgantt";
 export class AppModule {}
 ```
 
-### Option 2: Static Method (React-like)
+### Option 2: Static Method
 
 ```typescript
 // main.ts

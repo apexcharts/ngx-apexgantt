@@ -14,7 +14,7 @@ export const APEXGANTT_LICENSE_KEY = new InjectionToken<string>(
 let licenseKey: string | null = null;
 
 /**
- * static method to set license (similar to react wrapper)
+ * static method to set license
  * call this before bootstrapping your app
  *
  * @example
