@@ -3,7 +3,7 @@ import {
   ElementRef,
   Input,
   OnDestroy,
-  OnInit,
+  AfterViewInit,
   ViewChild,
   NgZone,
   ChangeDetectorRef,
@@ -28,10 +28,22 @@ import { APEXGANTT_LICENSE_KEY } from "./ngx-apexgantt.license";
 @Component({
   selector: "ngx-apexgantt",
   standalone: true,
-  template: "<div #ganttContainer></div>",
-  styles: [":host { display: block; width: 100%; height: 100%; }"],
+  template: "<div #ganttContainer class='ngx-apexgantt-container'></div>",
+  styles: [
+    `
+      :host {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      .ngx-apexgantt-container {
+        width: 100%;
+        height: 100%;
+      }
+    `,
+  ],
 })
-export class NgxApexGanttComponent implements OnInit, OnDestroy {
+export class NgxApexGanttComponent implements AfterViewInit, OnDestroy {
   @ViewChild("ganttContainer", { static: true }) ganttContainer!: ElementRef;
 
   // inputs
@@ -50,13 +62,20 @@ export class NgxApexGanttComponent implements OnInit, OnDestroy {
   @Output() taskResized = new EventEmitter<TaskResizedEventDetail>();
 
   // dependency injection
-  private ngZone = inject(NgZone);
-  private cdr = inject(ChangeDetectorRef);
-  private licenseKey = inject(APEXGANTT_LICENSE_KEY, { optional: true });
+  private readonly ngZone: NgZone;
+  private readonly cdr: ChangeDetectorRef;
+  private readonly licenseKey: string | null;
 
   private ganttInstance: ApexGantt | null = null;
 
-  ngOnInit(): void {
+  constructor() {
+    this.ngZone = inject(NgZone);
+    this.cdr = inject(ChangeDetectorRef);
+    this.licenseKey = inject(APEXGANTT_LICENSE_KEY, { optional: true });
+  }
+
+  ngAfterViewInit(): void {
+    // initialize after view is fully ready
     this.initializeGantt();
     this.setupEventListeners();
   }
@@ -70,11 +89,11 @@ export class NgxApexGanttComponent implements OnInit, OnDestroy {
     this.ngZone.runOutsideAngular(() => {
       const ganttOptions: GanttUserOptions = {
         ...this.options,
-        series: this.tasks,
-        width: this.width,
-        height: this.height,
-        viewMode: this.viewMode,
-        theme: this.theme,
+        series: this.options?.series || this.tasks,
+        width: this.options?.width || this.width,
+        height: this.options?.height || this.height,
+        viewMode: this.options?.viewMode || this.viewMode,
+        theme: this.options?.theme || this.theme,
       };
 
       this.ganttInstance = new ApexGantt(
