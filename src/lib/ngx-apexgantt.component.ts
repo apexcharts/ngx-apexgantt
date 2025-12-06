@@ -27,6 +27,7 @@ import { APEXGANTT_LICENSE_KEY } from "./ngx-apexgantt.license";
 
 @Component({
   selector: "ngx-apexgantt",
+  standalone: true,
   template: "<div #ganttContainer></div>",
   styles: [":host { display: block; width: 100%; height: 100%; }"],
 })

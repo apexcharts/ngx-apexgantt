@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/ngx-apexgantt",
+  "dest": "dist/ngx-apexgantt",
   "lib": {
     "entryFile": "src/public-api.ts"
   }
