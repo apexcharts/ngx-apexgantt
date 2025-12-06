@@ -1,0 +1,49 @@
+{
+  "hash": "cb25c36c",
+  "configHash": "4c170210",
+  "lockfileHash": "d3cd03da",
+  "browserHash": "5beeb9f4",
+  "optimized": {
+    "@angular/common": {
+      "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
+      "file": "@angular_common.js",
+      "fileHash": "6a092cfd",
+      "needsInterop": false
+    },
+    "@angular/core": {
+      "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
+      "file": "@angular_core.js",
+      "fileHash": "3006e16d",
+      "needsInterop": false
+    },
+    "@angular/platform-browser": {
+      "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
+      "file": "@angular_platform-browser.js",
+      "fileHash": "678d90d0",
+      "needsInterop": false
+    },
+    "apexgantt": {
+      "src": "../../../../../../node_modules/apexgantt/apexgantt.es.min.js",
+      "file": "apexgantt.js",
+      "fileHash": "67ef93f5",
+      "needsInterop": false
+    },
+    "ngx-apexgantt": {
+      "src": "../../../../../../../dist/ngx-apexgantt/fesm2022/ngx-apexgantt.mjs",
+      "file": "ngx-apexgantt.js",
+      "fileHash": "2fa144c2",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-ALATKUPO": {
+      "file": "chunk-ALATKUPO.js"
+    },
+    "chunk-KIXIL7HX": {
+      "file": "chunk-KIXIL7HX.js"
+    },
+    "chunk-WDMUDEB6": {
+      "file": "chunk-WDMUDEB6.js"
+    }
+  }
+}

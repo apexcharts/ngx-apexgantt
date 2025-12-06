@@ -1,0 +1,34 @@
+<div class="demo-container">
+  <h2>Events Demo</h2>
+  <p class="demo-description">
+    Interact with the tasks (drag, resize, or update) to see events being fired in real-time.
+    The event log below captures all interactions with timestamps.
+  </p>
+
+  <ngx-apexgantt
+    [tasks]="tasks"
+    [viewMode]="viewMode"
+    [height]="'350px'"
+    (taskUpdateSuccess)="onTaskUpdateSuccess($event)"
+    (taskDragged)="onTaskDragged($event)"
+    (taskResized)="onTaskResized($event)"
+  >
+  </ngx-apexgantt>
+
+  <div class="event-log-section">
+    <div class="log-header">
+      <h3>Event Log</h3>
+      <button class="clear-btn" (click)="clearLog()">Clear Log</button>
+    </div>
+    
+    <div class="event-log">
+      @if (eventLog.length === 0) {
+        <p class="no-events">No events yet. Try dragging or resizing tasks above.</p>
+      } @else {
+        @for (log of eventLog; track log) {
+          <div class="log-entry">{{ log }}</div>
+        }
+      }
+    </div>
+  </div>
+</div>
