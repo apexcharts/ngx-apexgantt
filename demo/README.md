@@ -1,6 +1,6 @@
 # ngx-apexgantt Demo Application
 
-This demo application showcases the **ngx-apexgantt** wrapper library with 4 comprehensive examples.
+This demo application showcases the **ngx-apexgantt** wrapper library.
 
 ## Prerequisites
 
@@ -30,6 +30,7 @@ npm install
 ```
 
 The `package.json` references the built library using:
+
 ```json
 "ngx-apexgantt": "file:../ngx-apexgantt/dist/ngx-apexgantt"
 ```
@@ -41,44 +42,6 @@ npm start
 ```
 
 Open browser to `http://localhost:4200`
-
-## What's Included
-
-### 4 Demo Components:
-
-1. **Basic Demo** - Simple gantt with linear dependencies
-2. **Interactivity + Styling** - Drag, drop, resize with custom colors
-3. **Events Demo** - Real-time event logging
-4. **Dark Theme Demo** - Dark mode support
-
-## Folder Structure
-
-```
-├── src/
-│   └── app/
-│       ├── demos/
-│       │   ├── basic-demo.component.*
-│       │   ├── interactive-demo.component.*
-│       │   ├── events-demo.component.*
-│       │   └── dark-theme-demo.component.*
-│       ├── app.component.* 
-│       └── ...
-└── package.json
-```
-
-## Using Published Package
-
-Once the library is published to npm, update `package.json`:
-
-```json
-{
-  "dependencies": {
-    "ngx-apexgantt": "^1.0.0"  // use published version
-  }
-}
-```
-
-Then run `npm install` again.
 
 ## Development Workflow
 

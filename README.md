@@ -8,8 +8,6 @@ Angular wrapper for [ApexGantt](https://github.com/apexcharts/apexgantt) - A Jav
 npm install ngx-apexgantt apexgantt
 # or
 yarn add ngx-apexgantt apexgantt
-# or
-pnpm add ngx-apexgantt apexgantt
 ```
 
 ## License Setup
@@ -509,23 +507,6 @@ import {
 } from "ngx-apexgantt";
 ```
 
-## Browser Support
-
-ngx-apexgantt supports all modern browsers:
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-MIT
-
-## Credits
-
-Built on top of [ApexGantt](https://github.com/apexcharts/apexgantt) by ApexCharts.
