@@ -11,6 +11,11 @@
     "project-management",
     "timeline"
   ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "author": "ApexCharts",
   "license": "See License in LICENSE",
   "repository": {
