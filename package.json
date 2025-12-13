@@ -1,6 +1,6 @@
 {
   "name": "ngx-apexgantt",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Angular wrapper for ApexGantt - A JavaScript library to create interactive Gantt charts",
   "keywords": [
     "angular",
@@ -20,12 +20,12 @@
   "license": "See License in LICENSE",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/apexcharts/ngx-apexgantt/"
   },
   "peerDependencies": {
     "@angular/common": "^18.0.0",
     "@angular/core": "^18.0.0",
-    "apexgantt": "^3.4.1"
+    "apexgantt": "^3.6.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
