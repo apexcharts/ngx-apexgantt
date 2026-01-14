@@ -27,27 +27,9 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Build Library
-        run: |
-          npm install
-          npm run build
-
-      - name: Install Demo Dependencies with Local Library
+      - name: Install Demo Dependencies
         working-directory: demo
-        run: |
-          npm install
-          npm install ../dist/ngx-apexgantt
-
-      - name: Remove tsconfig paths for production build
-        working-directory: demo
-        run: |
-          # Remove the paths mapping so it uses node_modules instead of source
-          node -e "
-            const fs = require('fs');
-            const tsconfig = JSON.parse(fs.readFileSync('tsconfig.json', 'utf8'));
-            delete tsconfig.compilerOptions.paths;
-            fs.writeFileSync('tsconfig.json', JSON.stringify(tsconfig, null, 2));
-          "
+        run: npm install
 
       - name: Build Demo App
         working-directory: demo
