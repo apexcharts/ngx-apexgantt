@@ -24,10 +24,6 @@ yarn-error.log*
 # testing
 coverage/
 
-# package manager
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
 
 # Angular cache
 .angular/
