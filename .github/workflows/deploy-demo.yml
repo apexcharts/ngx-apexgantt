@@ -32,14 +32,11 @@ jobs:
           npm install
           npm run build
 
-      - name: Install Demo Dependencies
+      - name: Install Demo Dependencies with Local Library
         working-directory: demo
-        run: npm install
-
-      - name: Link Local Library
         run: |
-          cd dist/ngx-apexgantt && npm link
-          cd ../../demo && npm link ngx-apexgantt
+          npm install
+          npm install ../dist/ngx-apexgantt
 
       - name: Build Demo App
         working-directory: demo
