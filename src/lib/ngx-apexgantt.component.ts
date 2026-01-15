@@ -9,7 +9,6 @@ import {
   ChangeDetectorRef,
   Output,
   EventEmitter,
-  inject,
 } from "@angular/core";
 
 import ApexGantt, {
@@ -23,7 +22,7 @@ import ApexGantt, {
   TaskResizedEventDetail,
 } from "apexgantt";
 
-import { APEXGANTT_LICENSE_KEY } from "./ngx-apexgantt.license";
+import { getApexGanttLicense } from "./ngx-apexgantt.license";
 
 @Component({
   selector: "ngx-apexgantt",
@@ -61,18 +60,12 @@ export class NgxApexGanttComponent implements AfterViewInit, OnDestroy {
   @Output() taskDragged = new EventEmitter<TaskDraggedEventDetail>();
   @Output() taskResized = new EventEmitter<TaskResizedEventDetail>();
 
-  // dependency injection
-  private readonly ngZone: NgZone;
-  private readonly cdr: ChangeDetectorRef;
-  private readonly licenseKey: string | null;
-
   private ganttInstance: ApexGantt | null = null;
 
-  constructor() {
-    this.ngZone = inject(NgZone);
-    this.cdr = inject(ChangeDetectorRef);
-    this.licenseKey = inject(APEXGANTT_LICENSE_KEY, { optional: true });
-  }
+  constructor(
+    private readonly ngZone: NgZone,
+    private readonly cdr: ChangeDetectorRef
+  ) {}
 
   ngAfterViewInit(): void {
     // initialize after view is fully ready
@@ -87,6 +80,7 @@ export class NgxApexGanttComponent implements AfterViewInit, OnDestroy {
 
   private initializeGantt(): void {
     this.ngZone.runOutsideAngular(() => {
+      const licenseKey = getApexGanttLicense();
       const ganttOptions: GanttUserOptions = {
         ...this.options,
         series: this.options?.series || this.tasks,
@@ -94,6 +88,7 @@ export class NgxApexGanttComponent implements AfterViewInit, OnDestroy {
         height: this.options?.height || this.height,
         viewMode: this.options?.viewMode || this.viewMode,
         theme: this.options?.theme || this.theme,
+        ...(licenseKey && { licenseKey }),
       };
 
       this.ganttInstance = new ApexGantt(
