@@ -2,36 +2,62 @@
  * Public API Surface of ngx-apexgantt
  */
 
-// re-export core library types for user convenience
+// Type-only re-exports from apexgantt (zero runtime cost)
 export type {
-  TaskInput,
-  TaskType,
+  // Options
   GanttUserOptions,
-  ViewMode,
+  GanttTheme,
   ThemeMode,
-  GanttEvents,
-  TaskUpdateSuccessEventDetail,
-  TaskDraggedEventDetail,
-  TaskResizedEventDetail,
-  TaskUpdateEventDetail,
-  TaskValidationErrorEventDetail,
-  TaskUpdateErrorEventDetail,
-  Annotation,
+
+  // Task model
+  TaskInput,
+  Task,
+  TaskDependency,
+  DependencyType,
+  BaselineInput,
+  BaselineOptions,
   ParsingConfig,
   ParsingValue,
-  GanttTheme,
+
+  // Annotations
+  Annotation,
+  Orientation,
+
+  // Toolbar
+  ToolbarItem,
+  ToolbarButton,
+  ToolbarSelect,
+  ToolbarSeparator,
+  ToolbarContext,
+  ColumnListItem,
+
+  // Typed event map and detail interfaces
+  GanttEventMap,
+  TaskUpdateEventDetail,
+  TaskUpdateSuccessEventDetail,
+  TaskUpdateErrorEventDetail,
+  TaskDraggedEventDetail,
+  TaskResizedEventDetail,
+  SelectionChangeEventDetail,
+  DependencyArrowUpdateDetail,
+  TaskValidationErrorEventDetail,
 } from "apexgantt";
 
-// re-export useful utilities
+// Value re-exports (needed at runtime)
 export {
+  ApexGantt,
+  ViewMode,
+  TaskType,
   ColumnKey,
+  ColumnList,
+  GanttEvents,
   LightTheme,
   DarkTheme,
   getTheme,
   DataParser,
 } from "apexgantt";
 
-// export Angular wrapper components and services
+// Angular wrapper components and services
 export { NgxApexGanttComponent } from "./lib/ngx-apexgantt.component";
 export { NgxApexGanttModule } from "./lib/ngx-apexgantt.module";
 export { APEXGANTT_LICENSE_KEY } from "./lib/ngx-apexgantt.license";

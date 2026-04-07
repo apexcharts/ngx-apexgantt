@@ -11,15 +11,20 @@ import {
   EventEmitter,
 } from "@angular/core";
 
-import ApexGantt, {
+import { ApexGantt, GanttEvents } from "apexgantt";
+
+import type {
   TaskInput,
   GanttUserOptions,
   ViewMode,
   ThemeMode,
-  GanttEvents,
+  TaskUpdateEventDetail,
   TaskUpdateSuccessEventDetail,
+  TaskUpdateErrorEventDetail,
   TaskDraggedEventDetail,
   TaskResizedEventDetail,
+  SelectionChangeEventDetail,
+  DependencyArrowUpdateDetail,
 } from "apexgantt";
 
 import { getApexGanttLicense } from "./ngx-apexgantt.license";
@@ -55,20 +60,24 @@ export class NgxApexGanttComponent implements AfterViewInit, OnDestroy {
   @Input() className?: string;
 
   // outputs
+  @Output() taskUpdate = new EventEmitter<TaskUpdateEventDetail>();
   @Output() taskUpdateSuccess =
     new EventEmitter<TaskUpdateSuccessEventDetail>();
+  @Output() taskUpdateError = new EventEmitter<TaskUpdateErrorEventDetail>();
   @Output() taskDragged = new EventEmitter<TaskDraggedEventDetail>();
   @Output() taskResized = new EventEmitter<TaskResizedEventDetail>();
+  @Output() selectionChange = new EventEmitter<SelectionChangeEventDetail>();
+  @Output() dependencyArrowUpdate =
+    new EventEmitter<DependencyArrowUpdateDetail>();
 
   private ganttInstance: ApexGantt | null = null;
 
   constructor(
     private readonly ngZone: NgZone,
-    private readonly cdr: ChangeDetectorRef
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   ngAfterViewInit(): void {
-    // initialize after view is fully ready
     this.initializeGantt();
     this.setupEventListeners();
   }
@@ -93,7 +102,7 @@ export class NgxApexGanttComponent implements AfterViewInit, OnDestroy {
 
       this.ganttInstance = new ApexGantt(
         this.ganttContainer.nativeElement,
-        ganttOptions
+        ganttOptions,
       );
 
       this.ganttInstance.render();
@@ -103,22 +112,30 @@ export class NgxApexGanttComponent implements AfterViewInit, OnDestroy {
   private setupEventListeners(): void {
     const container = this.ganttContainer.nativeElement;
 
-    // task update success event
+    container.addEventListener(GanttEvents.TASK_UPDATE, this.handleTaskUpdate);
     container.addEventListener(
       GanttEvents.TASK_UPDATE_SUCCESS,
-      this.handleTaskUpdateSuccess
+      this.handleTaskUpdateSuccess,
     );
-
-    // task dragged event
+    container.addEventListener(
+      GanttEvents.TASK_UPDATE_ERROR,
+      this.handleTaskUpdateError,
+    );
     container.addEventListener(
       GanttEvents.TASK_DRAGGED,
-      this.handleTaskDragged
+      this.handleTaskDragged,
     );
-
-    // task resized event
     container.addEventListener(
       GanttEvents.TASK_RESIZED,
-      this.handleTaskResized
+      this.handleTaskResized,
+    );
+    container.addEventListener(
+      GanttEvents.SELECTION_CHANGE,
+      this.handleSelectionChange,
+    );
+    container.addEventListener(
+      GanttEvents.DEPENDENCY_ARROW_UPDATE,
+      this.handleDependencyArrowUpdate,
     );
   }
 
@@ -126,39 +143,94 @@ export class NgxApexGanttComponent implements AfterViewInit, OnDestroy {
     const container = this.ganttContainer.nativeElement;
 
     container.removeEventListener(
+      GanttEvents.TASK_UPDATE,
+      this.handleTaskUpdate,
+    );
+    container.removeEventListener(
       GanttEvents.TASK_UPDATE_SUCCESS,
-      this.handleTaskUpdateSuccess
+      this.handleTaskUpdateSuccess,
+    );
+    container.removeEventListener(
+      GanttEvents.TASK_UPDATE_ERROR,
+      this.handleTaskUpdateError,
     );
     container.removeEventListener(
       GanttEvents.TASK_DRAGGED,
-      this.handleTaskDragged
+      this.handleTaskDragged,
     );
     container.removeEventListener(
       GanttEvents.TASK_RESIZED,
-      this.handleTaskResized
+      this.handleTaskResized,
+    );
+    container.removeEventListener(
+      GanttEvents.SELECTION_CHANGE,
+      this.handleSelectionChange,
+    );
+    container.removeEventListener(
+      GanttEvents.DEPENDENCY_ARROW_UPDATE,
+      this.handleDependencyArrowUpdate,
     );
   }
 
+  private handleTaskUpdate = (event: Event): void => {
+    this.ngZone.run(() => {
+      this.taskUpdate.emit(
+        (event as CustomEvent<TaskUpdateEventDetail>).detail,
+      );
+      this.cdr.markForCheck();
+    });
+  };
+
   private handleTaskUpdateSuccess = (event: Event): void => {
     this.ngZone.run(() => {
-      const customEvent = event as CustomEvent<TaskUpdateSuccessEventDetail>;
-      this.taskUpdateSuccess.emit(customEvent.detail);
+      this.taskUpdateSuccess.emit(
+        (event as CustomEvent<TaskUpdateSuccessEventDetail>).detail,
+      );
+      this.cdr.markForCheck();
+    });
+  };
+
+  private handleTaskUpdateError = (event: Event): void => {
+    this.ngZone.run(() => {
+      this.taskUpdateError.emit(
+        (event as CustomEvent<TaskUpdateErrorEventDetail>).detail,
+      );
       this.cdr.markForCheck();
     });
   };
 
   private handleTaskDragged = (event: Event): void => {
     this.ngZone.run(() => {
-      const customEvent = event as CustomEvent<TaskDraggedEventDetail>;
-      this.taskDragged.emit(customEvent.detail);
+      this.taskDragged.emit(
+        (event as CustomEvent<TaskDraggedEventDetail>).detail,
+      );
       this.cdr.markForCheck();
     });
   };
 
   private handleTaskResized = (event: Event): void => {
     this.ngZone.run(() => {
-      const customEvent = event as CustomEvent<TaskResizedEventDetail>;
-      this.taskResized.emit(customEvent.detail);
+      this.taskResized.emit(
+        (event as CustomEvent<TaskResizedEventDetail>).detail,
+      );
+      this.cdr.markForCheck();
+    });
+  };
+
+  private handleSelectionChange = (event: Event): void => {
+    this.ngZone.run(() => {
+      this.selectionChange.emit(
+        (event as CustomEvent<SelectionChangeEventDetail>).detail,
+      );
+      this.cdr.markForCheck();
+    });
+  };
+
+  private handleDependencyArrowUpdate = (event: Event): void => {
+    this.ngZone.run(() => {
+      this.dependencyArrowUpdate.emit(
+        (event as CustomEvent<DependencyArrowUpdateDetail>).detail,
+      );
       this.cdr.markForCheck();
     });
   };
