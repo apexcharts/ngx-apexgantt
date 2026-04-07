@@ -33,6 +33,7 @@
   "devDependencies": {
     "@angular/cli": "^18.0.0",
     "@angular/compiler-cli": "^18.0.0",
+    "apexgantt": "^3.10.2",
     "ng-packagr": "^18.0.0",
     "typescript": "~5.4.0"
   },
