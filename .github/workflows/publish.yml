@@ -56,7 +56,7 @@ jobs:
 
       - name: Publish to npm
         run: npm publish --provenance --tag ${{ steps.check.outputs.tag }}
-        working-directory: dist
+        working-directory: dist/ngx-apexgantt
 
       - name: Create git tag
         run: |
