@@ -1,6 +1,8 @@
-# ngx-apexgantt
+# Angular Gantt Chart Component — ngx-apexgantt
 
-Angular wrapper for [ApexGantt](https://github.com/apexcharts/apexgantt) - A JavaScript library to create interactive Gantt charts.
+An Angular Gantt chart component for interactive project timelines. Render tasks, dependencies, milestones, critical path, baselines, and annotations as a fully drag-and-drop schedule — with typed Inputs, EventEmitter Outputs, `@ViewChild` access, and first-class support for both standalone and module-based Angular applications.
+
+📚 **Documentation:** [apexcharts.com/apexgantt/docs](https://apexcharts.com/apexgantt/docs/) · 🎬 **Live demos:** [apexcharts.com/apexgantt/demos](https://apexcharts.com/apexgantt/demos/) · 📦 **npm:** [ngx-apexgantt](https://www.npmjs.com/package/ngx-apexgantt) · 🌐 **Hub:** [ApexGantt](https://apexcharts.com/apexgantt/)
 
 ## Installation
 
@@ -10,43 +12,17 @@ npm install ngx-apexgantt apexgantt
 yarn add ngx-apexgantt apexgantt
 ```
 
+Requires Angular 18+.
+
 ## License Setup
 
-If you have a commercial license, set it once at app initialization before rendering any charts.
+If you have a commercial license, set it once at app initialization before rendering any charts. Call `setApexGanttLicense` before bootstrapping your application.
 
-### Option 1: Angular Provider (Recommended)
+> **Note:** an Angular `provideApexGanttLicense` provider is **not exported** from the public API in v1.1.0 — use the `setApexGanttLicense` static call shown below.
 
 **Standalone App:**
 
-```typescript
-// app.config.ts
-import { ApplicationConfig } from "@angular/core";
-import { provideApexGanttLicense } from "ngx-apexgantt";
-
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideApexGanttLicense("your-license-key-here"),
-    // other providers...
-  ],
-};
-```
-
-**Module-based App:**
-
-```typescript
-// app.module.ts
-import { NgModule } from "@angular/core";
-import { provideApexGanttLicense } from "ngx-apexgantt";
-
-@NgModule({
-  providers: [provideApexGanttLicense("your-license-key-here")],
-})
-export class AppModule {}
-```
-
-### Option 2: Static Method
-
-```typescript
+```ts
 // main.ts
 import { bootstrapApplication } from "@angular/platform-browser";
 import { setApexGanttLicense } from "ngx-apexgantt";
@@ -57,6 +33,20 @@ import { appConfig } from "./app/app.config";
 setApexGanttLicense("your-license-key-here");
 
 bootstrapApplication(AppComponent, appConfig);
+```
+
+**Module-based App:**
+
+```ts
+// main.ts
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
+import { setApexGanttLicense } from "ngx-apexgantt";
+import { AppModule } from "./app/app.module";
+
+// set license before bootstrapping
+setApexGanttLicense("your-license-key-here");
+
+platformBrowserDynamic().bootstrapModule(AppModule);
 ```
 
 ## Quick Start
@@ -169,14 +159,11 @@ export class AppModule {}
 
 ### Outputs (Events)
 
-| Output                | Type           | Description                        |
-| --------------------- | -------------- | ---------------------------------- |
-| `taskUpdate`          | `EventEmitter` | Fired when a task is being updated |
-| `taskUpdateSuccess`   | `EventEmitter` | Fired after successful task update |
-| `taskValidationError` | `EventEmitter` | Fired when form validation fails   |
-| `taskUpdateError`     | `EventEmitter` | Fired when update fails            |
-| `taskDragged`         | `EventEmitter` | Fired when a task is dragged       |
-| `taskResized`         | `EventEmitter` | Fired when a task is resized       |
+| Output              | Type           | Description                        |
+| ------------------- | -------------- | ---------------------------------- |
+| `taskUpdateSuccess` | `EventEmitter` | Fired after successful task update |
+| `taskDragged`       | `EventEmitter` | Fired when a task is dragged       |
+| `taskResized`       | `EventEmitter` | Fired when a task is resized       |
 
 ### Public Methods
 
@@ -210,13 +197,13 @@ export class MyComponent {
 }
 ```
 
-| Method             | Parameters                                     | Description                       |
-| ------------------ | ---------------------------------------------- | --------------------------------- |
-| `update`           | `options: GanttOptions`                        | Update entire gantt configuration |
-| `updateTask`       | `taskId: string, taskData: Partial<TaskInput>` | Update a specific task            |
-| `zoomIn`           | none                                           | Zoom in the gantt chart           |
-| `zoomOut`          | none                                           | Zoom out the gantt chart          |
-| `getGanttInstance` | none                                           | Get underlying ApexGantt instance |
+| Method       | Parameters                                     | Description                       |
+| ------------ | ---------------------------------------------- | --------------------------------- |
+| `update`     | `options: GanttOptions`                        | Update entire gantt configuration |
+| `updateTask` | `taskId: string, taskData: Partial<TaskInput>` | Update a specific task            |
+| `zoomIn`     | none                                           | Zoom in the gantt chart           |
+| `zoomOut`    | none                                           | Zoom out the gantt chart          |
+| `destroy`    | none                                           | Destroy the gantt instance        |
 
 ## Usage Examples
 
@@ -399,7 +386,6 @@ import { NgxApexGanttComponent } from "ngx-apexgantt";
       (taskUpdateSuccess)="handleTaskUpdate($event)"
       (taskDragged)="handleTaskDragged($event)"
       (taskResized)="handleTaskResized($event)"
-      (taskUpdateError)="handleError($event)"
     >
     </ngx-apexgantt>
     <div class="event-log">
@@ -427,10 +413,6 @@ export class GanttEventsComponent {
 
   handleTaskResized(event: any) {
     this.eventLog += `Task Resized: ${event.taskId} duration changed by ${event.durationChange}\n`;
-  }
-
-  handleError(event: any) {
-    console.error("Update failed:", event.error);
   }
 
   async syncWithBackend(task: any) {
@@ -507,6 +489,22 @@ import {
 } from "ngx-apexgantt";
 ```
 
+## Framework wrappers
+
+`ngx-apexgantt` wraps the [`apexgantt`](https://www.npmjs.com/package/apexgantt) core engine. Using a different framework? All wrappers share the same engine and task data model:
+
+- **JavaScript** — [`apexgantt`](https://www.npmjs.com/package/apexgantt) ([GitHub](https://github.com/apexcharts/apexgantt))
+- **React** — [`react-apexgantt`](https://www.npmjs.com/package/react-apexgantt) ([GitHub](https://github.com/apexcharts/react-apexgantt))
+- **Vue** — [`vue-apexgantt`](https://www.npmjs.com/package/vue-apexgantt) ([GitHub](https://github.com/apexcharts/vue-apexgantt))
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+See [LICENSE](LICENSE) for details. Commercial licenses available at [apexcharts.com/pricing](https://apexcharts.com/pricing/).
+
+## About
+
+`ngx-apexgantt` is the Angular wrapper for [ApexGantt](https://apexcharts.com/apexgantt/) — part of the [ApexCharts](https://apexcharts.com/) family. One Gantt chart component for JavaScript, React, Angular, and Vue applications, with a consistent API across every framework wrapper.
