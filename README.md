@@ -2,7 +2,7 @@
 
 An Angular Gantt chart component for interactive project timelines. Render tasks, dependencies, milestones, critical path, baselines, and annotations as a fully drag-and-drop schedule — with typed Inputs, EventEmitter Outputs, `@ViewChild` access, and first-class support for both standalone and module-based Angular applications.
 
-📚 **Documentation:** [apexcharts.com/apexgantt/docs](https://apexcharts.com/apexgantt/docs/) · 🎬 **Live demos:** [apexcharts.com/apexgantt/demos](https://apexcharts.com/apexgantt/demos/) · 📦 **npm:** [ngx-apexgantt](https://www.npmjs.com/package/ngx-apexgantt) · 🌐 **Hub:** [ApexGantt](https://apexcharts.com/apexgantt/)
+📚 **Documentation:** [apexcharts.com/apexgantt/docs](https://apexcharts.com/apexgantt/docs/) · 🎬 **Live demos:** [apexcharts.com/apexgantt/demos](https://apexcharts.com/apexgantt/demos/) · 📦 **npm:** [ngx-apexgantt](https://www.npmjs.com/package/ngx-apexgantt) · 📖 **Guide:** [Angular Gantt Chart](https://apexcharts.com/angular-gantt-chart/) · 🌐 **Hub:** [ApexGantt](https://apexcharts.com/apexgantt/)
 
 ## Installation
 
