@@ -1,6 +1,6 @@
 {
   "name": "ngx-apexgantt",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Angular wrapper for ApexGantt - A JavaScript library to create interactive Gantt charts",
   "keywords": [
     "angular",
@@ -10,11 +10,6 @@
     "gantt-chart",
     "project-management",
     "timeline"
-  ],
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
   ],
   "author": "ApexCharts",
   "license": "See License in LICENSE",
