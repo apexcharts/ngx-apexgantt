@@ -64,7 +64,7 @@ import { NgxApexGanttComponent, TaskInput } from "ngx-apexgantt";
   template: `
     <ngx-apexgantt
       [tasks]="tasks"
-      [viewMode]="'week'"
+      [pixelsPerDay]="25.7"
       [height]="'500px'"
       (taskUpdateSuccess)="onTaskUpdate($event)"
     >
@@ -105,7 +105,7 @@ import { TaskInput } from "ngx-apexgantt";
 @Component({
   selector: "app-gantt",
   template: `
-    <ngx-apexgantt [tasks]="tasks" [viewMode]="'week'" [height]="'500px'">
+    <ngx-apexgantt [tasks]="tasks" [pixelsPerDay]="25.7" [height]="'500px'">
     </ngx-apexgantt>
   `,
 })
@@ -145,7 +145,7 @@ export class AppModule {}
 | Input      | Type                | Description                                          |
 | ---------- | ------------------- | ---------------------------------------------------- |
 | `tasks`    | `TaskInput[]`       | Array of tasks (shortcut for `options.series`)       |
-| `viewMode` | `string`            | View mode: 'day', 'week', 'month', 'quarter', 'year' |
+| `pixelsPerDay` | `number`        | Continuous zoom level (pixels-per-day): `0.5` ≈ year, `4.9` ≈ month, `25.7` ≈ week, `80` = day |
 | `theme`    | `'light' \| 'dark'` | Color theme                                          |
 | `width`    | `string \| number`  | Chart width                                          |
 | `height`   | `string \| number`  | Chart height                                         |
@@ -192,7 +192,7 @@ export class MyComponent {
   }
 
   updateAll() {
-    this.ganttChart.update({ viewMode: "month" });
+    this.ganttChart.update({ pixelsPerDay: 4.9 });
   }
 }
 ```
@@ -225,7 +225,7 @@ import { NgxApexGanttComponent, TaskInput } from "ngx-apexgantt";
     <ngx-apexgantt
       #ganttChart
       [tasks]="tasks"
-      [viewMode]="'week'"
+      [pixelsPerDay]="25.7"
       [height]="'500px'"
     >
     </ngx-apexgantt>
@@ -258,7 +258,7 @@ export class GanttBasicComponent {
 
 ```typescript
 import { Component } from "@angular/core";
-import { NgxApexGanttComponent, GanttOptions, ViewMode } from "ngx-apexgantt";
+import { NgxApexGanttComponent, GanttOptions } from "ngx-apexgantt";
 
 @Component({
   selector: "app-gantt-advanced",
@@ -266,16 +266,16 @@ import { NgxApexGanttComponent, GanttOptions, ViewMode } from "ngx-apexgantt";
   imports: [NgxApexGanttComponent],
   template: `
     <div class="controls">
-      <select [(ngModel)]="currentViewMode" (change)="updateViewMode()">
-        <option value="day">Day</option>
-        <option value="week">Week</option>
-        <option value="month">Month</option>
+      <select [(ngModel)]="currentPixelsPerDay" (change)="updateZoom()">
+        <option [ngValue]="80">Day</option>
+        <option [ngValue]="25.7">Week</option>
+        <option [ngValue]="4.9">Month</option>
       </select>
       <button (click)="toggleTheme()">Toggle Theme</button>
     </div>
     <ngx-apexgantt
       [options]="ganttOptions"
-      [viewMode]="currentViewMode"
+      [pixelsPerDay]="currentPixelsPerDay"
       [theme]="currentTheme"
       (taskUpdateSuccess)="onTaskUpdate($event)"
       (taskDragged)="onTaskDragged($event)"
@@ -284,7 +284,7 @@ import { NgxApexGanttComponent, GanttOptions, ViewMode } from "ngx-apexgantt";
   `,
 })
 export class GanttAdvancedComponent {
-  currentViewMode: string = "week";
+  currentPixelsPerDay = 25.7;
   currentTheme: "light" | "dark" = "light";
 
   ganttOptions: GanttOptions = {
@@ -306,8 +306,8 @@ export class GanttAdvancedComponent {
     rowHeight: 32,
   };
 
-  updateViewMode() {
-    console.log("View mode changed to:", this.currentViewMode);
+  updateZoom() {
+    console.log("Zoom changed to pixelsPerDay:", this.currentPixelsPerDay);
   }
 
   toggleTheme() {
@@ -482,7 +482,6 @@ import {
   NgxApexGanttComponent,
   GanttOptions,
   TaskInput,
-  ViewMode,
   ColumnKey,
   TaskUpdateDetail,
   TaskDraggedDetail,

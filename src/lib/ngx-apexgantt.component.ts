@@ -16,7 +16,6 @@ import { ApexGantt, GanttEvents } from "apexgantt";
 import type {
   TaskInput,
   GanttUserOptions,
-  ViewMode,
   ThemeMode,
   TaskUpdateEventDetail,
   TaskUpdateSuccessEventDetail,
@@ -55,7 +54,13 @@ export class NgxApexGanttComponent implements AfterViewInit, OnDestroy {
   @Input() options?: GanttUserOptions;
   @Input() width?: string | number;
   @Input() height?: string | number;
-  @Input() viewMode?: ViewMode;
+  /**
+   * Continuous zoom level, in pixels-per-day. The header tier
+   * (year/quarter/month/week/day/hour/minute) is auto-picked from this value.
+   * Reference points: `0.5` ≈ year, `1.6` ≈ quarter, `4.9` ≈ month,
+   * `25.7` ≈ week, `80` = day.
+   */
+  @Input() pixelsPerDay?: number;
   @Input() theme?: ThemeMode;
   @Input() className?: string;
 
@@ -95,7 +100,7 @@ export class NgxApexGanttComponent implements AfterViewInit, OnDestroy {
         series: this.options?.series || this.tasks,
         width: this.options?.width || this.width,
         height: this.options?.height || this.height,
-        viewMode: this.options?.viewMode || this.viewMode,
+        pixelsPerDay: this.options?.pixelsPerDay ?? this.pixelsPerDay,
         theme: this.options?.theme || this.theme,
         ...(licenseKey && { licenseKey }),
       };
