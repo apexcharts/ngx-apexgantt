@@ -502,7 +502,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-See [LICENSE](LICENSE) for details. Commercial licenses available at [apexcharts.com/pricing](https://apexcharts.com/pricing/).
+See [LICENSE](LICENSE.md) for details. Commercial licenses available at [apexcharts.com/pricing](https://apexcharts.com/pricing/).
 
 ## About
 
